@@ -25,13 +25,13 @@ def dbJob():
     file_name = 'mysql-%s-%s.sql' % (host, tstamp)
     file_path = '%s/%s' % (tmpdir, file_name)
     dumper = 'mysqldump -u %s -p%s > %s' % (dbuser, dbpass, file_path)
-    sender = 's3cmd sync --check-md5 %s s3://backups.tastyworks.internal/mysql/%s %s-mysql' % (file_path, file_name, config)
+    sender = 's3cmd sync --check-md5 %s s3://backups.somebucket.internal/mysql/%s %s-mysql' % (file_path, file_name, config)
     subprocess.call(dumper, shell=True)
     subprocess.call(sender, shell=True)
 
 
 def fileJob():
-    sender = 's3cmd sync --check-md5 %s s3://backups.tastyworks.internal/file/%s/%s/ %s-file' % (target_path, host, tstamp, config)
+    sender = 's3cmd sync --check-md5 %s s3://backups.somebucket.internal/file/%s/%s/ %s-file' % (target_path, host, tstamp, config)
     subprocess.call(sender, shell=True)
 
 if switch == 'all':
